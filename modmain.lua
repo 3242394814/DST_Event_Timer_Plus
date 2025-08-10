@@ -6,9 +6,6 @@ Assets =
 {
     Asset("ATLAS", "images/Aporkalypse_Clock.xml"), -- 灾变日历
     Asset("IMAGE", "images/Aporkalypse_Clock.tex"),
-
-    -- Asset("ATLAS", "images/lifeplant.xml"), -- 不老泉
-    -- Asset("IMAGE", "images/lifeplant.tex"),
 }
 
 local _G = GLOBAL
@@ -16,6 +13,7 @@ local SaveTimeData = _G.SaveTimeData
 
 
 -- [[岛屿冒险 - 海难]]
+_G.EVENTS.twister                       = { name = STRINGS.NAMES.TWISTER , anim = "idle_loop", build = "twister_build", bank = "twister", scale = 0.02, offest = -10}
 _G.EVENTS.chessnavy                     = { name = STRINGS.NAMES.KNIGHTBOAT, anim = "idle_loop", build = "knightboat_build", bank = "knightboat", scale = 0.09, offest = -10 } -- 浮船骑士
 _G.EVENTS.krakener                      = { name = STRINGS.NAMES.KRAKEN, anim = "idle_loop", build = "quacken", bank = "quacken", scale = 0.03, offest = -10 } -- 海妖
 _G.EVENTS.tigersharker                  = { name = STRINGS.NAMES.TIGERSHARK, anim = "taunt", build = "tigershark_ground_build", bank = "tigershark", scale = 0.02, offest = -10 } -- 虎鲨
@@ -31,11 +29,26 @@ _G.EVENTS.GRUB_RESPAWN_TIME             = { name = STRINGS.UI.CUSTOMIZATIONSCREE
 _G.EVENTS.ancient_herald                = { name = STRINGS.NAMES.ANCIENT_HERALD, anim = "idle", build = "ancient_spirit", bank = "ancient_spirit", scale = 0.05, offest = -10 } -- 远古先驱
 _G.EVENTS.pugalisk_fountain             = { name = STRINGS.NAMES.PUGALISK_FOUNTAIN, anim = "flow_loop", build = "python_fountain", bank = "fountain", scale = 0.02, offest = -10}
 
+AddPrefabPostInit("world", function(inst)
+    if TheWorld:HasTag("island") then
+        -- 猎犬替换为鳄狗
+        _G.EVENTS.hound = { name = STRINGS.NAMES.CROCODOG , anim = "run_loop", build = "crocodog", bank = "crocodog", scale = 0.08, offest = -14 }
+    elseif TheWorld:HasTag("volcano") then
+        -- 猎犬替换为鳄狗(虽然火山没有猎犬袭击)
+        _G.EVENTS.hound = { name = STRINGS.NAMES.CROCODOG , anim = "run_loop", build = "crocodog", bank = "crocodog", scale = 0.08, offest = -14 }
+    end
+end)
+
 if TheNet:GetIsClient() then return end -- 客户端止步于此
 
 AddPrefabPostInit("world", function(inst)
     if TheWorld:HasTag("island") then
         inst:DoPeriodicTask(TUNING.UPTATE, function()
+            -- 豹卷风
+            local twister_time = TheWorld.components.worldsettingstimer:GetTimeLeft("twister_timetoattack")
+            if twister_time then
+                SaveTimeData("twister", math.floor(twister_time))
+            end
             -- 浮船骑士
             local chessnavy_time = TheWorld.components.chessnavy and TheWorld.components.chessnavy.spawn_timer
             if chessnavy_time then

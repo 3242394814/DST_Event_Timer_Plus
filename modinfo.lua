@@ -26,16 +26,16 @@ name = zh_en("饥饥事件计时器加强", "Don't Event Timer Plus")
 description = zh_en([[
 加强饥饥事件计时器Mod
 使它支持显示
-岛屿冒险 - 海难模组中的：虎鲨、火山、浮船骑士、海妖 倒计时显示
+岛屿冒险 - 海难模组中的：豹卷风、虎鲨、火山、浮船骑士、海妖 倒计时显示
 云霄国度模组中的：吸血蝙蝠、不老泉、蒙面猪人、友善的大鹏、大灾变、大灾变期间的蝙蝠/远古先驱 倒计时显示
 ]], [[
 Enhances the Don't Event Timer mod
 Adds countdown displays for:
-Island Adventures - Shipwrecked : Tiger Shark, Volcano, Floaty Boaty Knight, Quacken
+Island Adventures - Shipwrecked : Sealnado, Tiger Shark, Volcano, Floaty Boaty Knight, Quacken
 Above the Clouds : Vampire Bat, Fountain of Youth, Masked Pig, BFB, Aporkalypse, and bats/Ancient Herald during the Aporkalypse
 ]])
 author = "冰冰羊"
-version = "2025-07-06"
+version = "2025-08-10"
 dst_compatible = true
 forge_compatible = false
 gorge_compatible = false
